@@ -7,5 +7,5 @@ data class SharePostRequest(
     val images: List<MultipartFile>,
     val title: String,
     val description: String,
-    val adress: String
+    val address: String
 )

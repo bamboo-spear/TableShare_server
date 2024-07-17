@@ -19,14 +19,14 @@ import java.util.UUID
 class ShareService(val shareRepository: ShareRepository, val userRepository: UserRepository, val s3UploadService: S3UploadService, val geocodingService: GeocodingService) {
     fun postShare(request: SharePostRequest, principal: Principal) {
         val user = userRepository.findUserByUuid(UUID.fromString(principal.name)) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
-        val location = geocodingService.getLatLngFromAddress(request.adress)
+        val location = geocodingService.getLatLngFromAddress(request.address)
         shareRepository.save(Share(
             sharer = user,
             category = Category.fromInt(request.category)!!, // todo validate
-            images = s3UploadService.saveImages(request.images, ""),
+            images = s3UploadService.saveImages(request.images, "images"),
             title = request.title,
             description = request.description,
-            address = request.adress,
+            address = request.address,
             lat = location!!.first,
             lng = location!!.second
         ))
