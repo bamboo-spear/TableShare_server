@@ -39,7 +39,8 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             sharer = UserResponse(
                 uuid = it.sharer.uuid.toString(),
                 name = it.sharer.name,
-                socialCredit = it.sharer.socialCredit.toString()
+                socialCredit = it.sharer.socialCredit.toString(),
+                socialCreditStack = it.sharer.socialCreditStack.toString()
             ),
             category = it.category.toString(),
             images = it.images.map { ImageResponse(
@@ -60,7 +61,8 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             sharer = UserResponse(
                 uuid = share.sharer.uuid.toString(),
                 name = share.sharer.name,
-                socialCredit = share.sharer.socialCredit.toString()
+                socialCredit = share.sharer.socialCredit.toString(),
+                socialCreditStack = share.sharer.socialCreditStack.toString()
             ),
             category = share.category.toString(),
             images = share.images.map { ImageResponse(
@@ -80,7 +82,8 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             sharer = UserResponse(
                 uuid = it.sharer.uuid.toString(),
                 name = it.sharer.name,
-                socialCredit = it.sharer.socialCredit.toString()
+                socialCredit = it.sharer.socialCredit.toString(),
+                socialCreditStack = it.sharer.socialCreditStack.toString()
             ),
             category = it.category.toString(),
             images = it.images.map { ImageResponse(

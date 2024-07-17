@@ -21,14 +21,15 @@ class WantService(val wantRepository: WantRepository, val shareRepository: Share
         return wants.map { UserResponse(
             uuid = it.wisher.uuid.toString(),
             name = it.wisher.name,
-            socialCredit = it.wisher.socialCredit.toString()
+            socialCredit = it.wisher.socialCredit.toString(),
+            socialCreditStack = it.wisher.socialCreditStack.toString()
         ) }
     }
     fun postWant(uuid: String, principal: Principal) {
         val share = shareRepository.findShareByUuid(UUID.fromString(uuid)) ?: throw CustomError(ErrorState.NOT_FOUND_SHARE)
         val user = userRepository.findUserByUuid(UUID.fromString(principal.name)) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
         wantRepository.findWantByShareAndWisher(share, user)?.let { throw CustomError(ErrorState.WANT_IS_ALREADY_EXISTED) }
-        userRepository.save(share.sharer.copy(socialCredit = share.sharer.socialCredit + 5))
+        userRepository.save(share.sharer.copy(socialCredit = share.sharer.socialCredit + 5, socialCreditStack = share.sharer.socialCredit + 5))
         wantRepository.save(Want(
             share = share,
             wisher = user
@@ -40,7 +41,7 @@ class WantService(val wantRepository: WantRepository, val shareRepository: Share
         if (share.sharer != user) throw CustomError(ErrorState.YOUR_NOT_OWNER)
         val wisher = userRepository.findUserByUuid(UUID.fromString(wisherUUID)) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
         val want = wantRepository.findWantByShareAndWisher(share, wisher) ?: throw CustomError(ErrorState.NOT_FOUND_WANT)
-        userRepository.save(wisher.copy(socialCredit = 5))
+        userRepository.save(wisher.copy(socialCredit = share.sharer.socialCredit + 5, socialCreditStack = share.sharer.socialCredit + 5))
         wantRepository.delete(want)
     }
 

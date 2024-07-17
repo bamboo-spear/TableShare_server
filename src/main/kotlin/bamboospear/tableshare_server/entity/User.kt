@@ -14,5 +14,6 @@ data class User(
     val id: String,
     val password: String,
     val name: String,
-    val socialCredit: Long = 0
+    val socialCredit: Long = 0,
+    val socialCreditStack: Long = 0
 ) {}
