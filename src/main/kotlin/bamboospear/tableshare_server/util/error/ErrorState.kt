@@ -23,6 +23,7 @@ enum class ErrorState(val status: HttpStatus = HttpStatus.OK, val message: Strin
 
     YOUR_NOT_OWNER(HttpStatus.FORBIDDEN, "Your not owner"),
     YOU_ARE_POOL(HttpStatus.BAD_REQUEST, "You do not have enough social credit to buy a product"),
+    YOU_CAN_NOT_WANT_IT(HttpStatus.BAD_REQUEST, "You can not want it"),
 
     WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "Wrong password"),
     WRONG_ADRESS(HttpStatus.BAD_REQUEST, "Wrong adress"),

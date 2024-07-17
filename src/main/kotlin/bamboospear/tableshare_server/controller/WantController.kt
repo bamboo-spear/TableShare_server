@@ -19,8 +19,8 @@ import java.security.Principal
 class WantController(val wantService: WantService) {
     @GetMapping("/{uuid}/want")
     fun getWants(@PathVariable uuid: String, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
-        wantService.getWants(uuid, principal)
-        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
+        val result = wantService.getWants(uuid, principal)
+        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(result))
     }
     @PostMapping("/{uuid}/want")
     fun postWant(@PathVariable uuid: String, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
