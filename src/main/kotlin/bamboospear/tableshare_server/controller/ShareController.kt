@@ -21,10 +21,15 @@ import java.security.Principal
 @RestController
 @RequestMapping("/share")
 class ShareController(val shareService: ShareService) {
-    @PostMapping()
+    @PostMapping(consumes = ["multipart/form-data"])
     fun postShare(request: SharePostRequest, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
         shareService.postShare(request, principal)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
+    }
+    @GetMapping("/my")
+    fun getMyShares(principal: Principal): ResponseEntity<ResponseFormat<List<ShareInfoGetRequest>>> {
+        val shares = shareService.getMyShares(principal)
+        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(shares))
     }
     @GetMapping("/{uuid}")
     fun getShareInfo(@PathVariable uuid: String): ResponseEntity<ResponseFormat<ShareInfoGetRequest>> {

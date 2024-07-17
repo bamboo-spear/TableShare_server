@@ -28,6 +28,7 @@ class SecurityConfig(val tokenFilter: TokenFilter) {
                 it
                     .requestMatchers("/login", "/sign-up").permitAll()
                     .requestMatchers("/test").permitAll()
+                    .requestMatchers("/swagger-ui.html", "/api-docs/**", "/swagger-ui/**").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement {

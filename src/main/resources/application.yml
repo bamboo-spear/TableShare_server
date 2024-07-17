@@ -38,3 +38,8 @@ cloud:  # todo make a bucket
       bucket: table-share
       accessKey: AKIAW3BEXVIAZHCYSIFL
       secretKey: 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
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html

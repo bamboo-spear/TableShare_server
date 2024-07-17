@@ -31,6 +31,28 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             lng = location!!.second
         ))
     }
+    fun getMyShares(principal: Principal): List<ShareInfoGetRequest> {
+        val user = userRepository.findUserByUuid(UUID.fromString(principal.name)) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
+        val shares = shareRepository.findSharesBySharer(user)
+        return shares.map { ShareInfoGetRequest(
+            uuid = it.uuid,
+            sharer = UserResponse(
+                uuid = it.sharer.uuid.toString(),
+                name = it.sharer.name,
+                socialCredit = it.sharer.socialCredit.toString()
+            ),
+            category = it.category.toString(),
+            images = it.images.map { ImageResponse(
+                uuid = it.uuid,
+                url = it.url
+            ) },
+            title = it.title,
+            description = it.description,
+            lat = it.lat,
+            lng = it.lng
+        )
+        }
+    }
     fun getShareInfo(uuid: String): ShareInfoGetRequest {
         val share = shareRepository.findShareByUuid(UUID.fromString(uuid)) ?: throw CustomError(ErrorState.NOT_FOUND_SHARE)
         return ShareInfoGetRequest(
