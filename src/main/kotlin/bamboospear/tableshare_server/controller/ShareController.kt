@@ -44,8 +44,8 @@ class ShareController(val shareService: ShareService) {
     }
 
     @DeleteMapping("/{uuid}")
-    fun deleteShare(@PathVariable uuid: String, @RequestParam(value = "username", required = false) username: String? = null): ResponseEntity<ResponseFormat<Any>> {
-        shareService.deleteShare(uuid, username)
+    fun deleteShare(@PathVariable uuid: String, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
+        shareService.deleteShare(uuid, principal)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
     }
 }

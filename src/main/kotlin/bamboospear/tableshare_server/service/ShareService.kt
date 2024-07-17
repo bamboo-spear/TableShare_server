@@ -72,12 +72,10 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
         )
     }}
 
-    fun deleteShare(uuid: String, username: String?) {
+    fun deleteShare(uuid: String, principal: Principal) {
         val share = shareRepository.findShareByUuid(UUID.fromString(uuid)) ?: throw CustomError(ErrorState.NOT_FOUND_SHARE)
-        if (username != null) {
-            val user = userRepository.findUserByName(username) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
-            userRepository.save(user.copy(socialCredit = user.socialCredit + 10))
-        }
+        val user = userRepository.findUserByUuid(UUID.fromString(principal.name))
+        if (share.sharer != user) throw CustomError(ErrorState.YOUR_NOT_OWNER)
         shareRepository.delete(share)
     }
 }

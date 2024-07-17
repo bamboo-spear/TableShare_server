@@ -12,5 +12,7 @@ data class Want(
     @GeneratedValue
     val uuid: UUID = UUID.randomUUID(),
     @ManyToOne
-    val wisher: User
+    val wisher: User,
+    @ManyToOne
+    val share: Share
 )
