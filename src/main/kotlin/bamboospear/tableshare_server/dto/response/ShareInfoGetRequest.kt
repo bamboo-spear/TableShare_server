@@ -13,6 +13,7 @@ data class ShareInfoGetRequest(
     val images: List<ImageResponse>,
     val title: String,
     val description: String,
+    val adress: String,
     val lat: Double,
     val lng: Double
 )

@@ -27,6 +27,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             images = s3UploadService.saveImages(request.images, ""),
             title = request.title,
             description = request.description,
+            adress = request.adress,
             lat = location!!.first,
             lng = location!!.second
         ))
@@ -49,6 +50,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             ) },
             title = it.title,
             description = it.description,
+            adress = it.adress,
             lat = it.lat,
             lng = it.lng
         )
@@ -71,6 +73,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             ) },
             title = share.title,
             description = share.description,
+            adress = share.adress,
             lat = share.lat,
             lng = share.lng
         )
@@ -92,6 +95,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             ) },
             title = it.title,
             description = it.description,
+            adress = it.adress,
             lat = it.lat,
             lng = it.lng
         )

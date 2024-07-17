@@ -15,6 +15,7 @@ data class Share(
     val images: List<Image>,
     val title: String,
     val description: String,
+    val adress: String,
     val lat: Double,
     val lng: Double
 )

@@ -20,7 +20,7 @@ class TokenFilter(val tokenProvider: JwtProvider, @Value("\${jwt.haeder}") val h
         log.info(request.requestURI)
 
         request.getHeader(header)?.let {
-            log.error(it)
+            log.info(it)
             tokenProvider.validateToken(it)
             val auth = tokenProvider.getAuthenticationByToken(it)
             SecurityContextHolder.getContext().authentication = auth
