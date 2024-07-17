@@ -1,6 +1,7 @@
 package bamboospear.tableshare_server.service
 
 import bamboospear.tableshare_server.dto.request.SharePostRequest
+import bamboospear.tableshare_server.dto.request.SharesGetRequest
 import bamboospear.tableshare_server.dto.response.ImageResponse
 import bamboospear.tableshare_server.dto.response.ShareInfoGetRequest
 import bamboospear.tableshare_server.dto.response.UserResponse
@@ -23,7 +24,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
         shareRepository.save(Share(
             sharer = user,
             category = Category.fromInt(request.category)!!, // todo validate
-            images = s3UploadService.saveImages(request.images, "share_image"),
+            images = s3UploadService.saveImages(request.images, ""),
             title = request.title,
             description = request.description,
             lat = location!!.first,
@@ -50,7 +51,24 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             lng = share.lng
         )
     }
-    fun getShares(): List<ShareInfoGetRequest> {
-        val shares = shareRepository.findSharesByLatAnAndLngAndKm()
-    }
+    fun getShares(request: SharesGetRequest): List<ShareInfoGetRequest> {
+        val shares = shareRepository.findSharesByLatAnAndLngAndKm(request.lat, request.lng, request.km)
+        return shares.map { ShareInfoGetRequest(
+            uuid = it.uuid,
+            sharer = UserResponse(
+                uuid = it.sharer.uuid.toString(),
+                name = it.sharer.name,
+                socialCredit = it.sharer.socialCredit.toString()
+            ),
+            category = it.category.toString(),
+            images = it.images.map { ImageResponse(
+                uuid = it.uuid,
+                url = it.url
+            ) },
+            title = it.title,
+            description = it.description,
+            lat = it.lat,
+            lng = it.lng
+        )
+    }}
 }

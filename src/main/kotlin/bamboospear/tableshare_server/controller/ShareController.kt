@@ -32,7 +32,7 @@ class ShareController(val shareService: ShareService) {
     }
     @GetMapping()
     fun getShares(@RequestBody @Valid request: SharesGetRequest): ResponseEntity<ResponseFormat<List<ShareInfoGetRequest>>> {
-        val shares = shareService.getShares()
+        val shares = shareService.getShares(request)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(shares))
     }
 }

@@ -35,6 +35,6 @@ cloud:  # todo make a bucket
     region:
       static: ap-northeast-2
     s3:
-      bucket: nonabili-bucket
+      bucket: table-share
       accessKey: AKIAW3BEXVIAZHCYSIFL
       secretKey: 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
