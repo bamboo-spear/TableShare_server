@@ -11,7 +11,6 @@ import bamboospear.tableshare_server.repository.ShareRepository
 import bamboospear.tableshare_server.repository.UserRepository
 import bamboospear.tableshare_server.util.error.CustomError
 import bamboospear.tableshare_server.util.error.ErrorState
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import java.security.Principal
 import java.util.UUID
@@ -27,7 +26,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             images = s3UploadService.saveImages(request.images, ""),
             title = request.title,
             description = request.description,
-            adress = request.adress,
+            address = request.adress,
             lat = location!!.first,
             lng = location!!.second
         ))
@@ -50,7 +49,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             ) },
             title = it.title,
             description = it.description,
-            adress = it.adress,
+            address = it.address,
             lat = it.lat,
             lng = it.lng
         )
@@ -73,7 +72,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             ) },
             title = share.title,
             description = share.description,
-            adress = share.adress,
+            address = share.address,
             lat = share.lat,
             lng = share.lng
         )
@@ -95,7 +94,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             ) },
             title = it.title,
             description = it.description,
-            adress = it.adress,
+            address = it.address,
             lat = it.lat,
             lng = it.lng
         )

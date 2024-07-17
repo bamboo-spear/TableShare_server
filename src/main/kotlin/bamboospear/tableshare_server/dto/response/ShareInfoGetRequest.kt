@@ -1,9 +1,5 @@
 package bamboospear.tableshare_server.dto.response
 
-import bamboospear.tableshare_server.entity.Category
-import bamboospear.tableshare_server.entity.Image
-import bamboospear.tableshare_server.entity.User
-import jakarta.persistence.*
 import java.util.*
 
 data class ShareInfoGetRequest(
@@ -13,7 +9,7 @@ data class ShareInfoGetRequest(
     val images: List<ImageResponse>,
     val title: String,
     val description: String,
-    val adress: String,
+    val address: String,
     val lat: Double,
     val lng: Double
 )
