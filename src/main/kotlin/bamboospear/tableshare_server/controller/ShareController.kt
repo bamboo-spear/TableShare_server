@@ -8,6 +8,7 @@ import bamboospear.tableshare_server.util.ResponseFormat
 import bamboospear.tableshare_server.util.ResponseFormatBuilder
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,7 +22,7 @@ import java.security.Principal
 @RequestMapping("/share")
 class ShareController(val shareService: ShareService) {
     @PostMapping()
-    fun postShare(@RequestBody @Valid request: SharePostRequest, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
+    fun postShare(request: SharePostRequest, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
         shareService.postShare(request, principal)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
     }
@@ -31,8 +32,20 @@ class ShareController(val shareService: ShareService) {
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(share))
     }
     @GetMapping()
-    fun getShares(@RequestBody @Valid request: SharesGetRequest): ResponseEntity<ResponseFormat<List<ShareInfoGetRequest>>> {
+    fun getShares(
+        @RequestParam lat: Double,
+        @RequestParam lng: Double,
+        @RequestParam km: Int,
+        @RequestParam category: Int
+    ): ResponseEntity<ResponseFormat<List<ShareInfoGetRequest>>> {
+        val request = SharesGetRequest(lat, lng, km, category)
         val shares = shareService.getShares(request)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(shares))
+    }
+
+    @DeleteMapping("/{uuid}")
+    fun deleteShare(@PathVariable uuid: String, @RequestParam(value = "username", required = false) username: String? = null): ResponseEntity<ResponseFormat<Any>> {
+        shareService.deleteShare(uuid, username)
+        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
     }
 }

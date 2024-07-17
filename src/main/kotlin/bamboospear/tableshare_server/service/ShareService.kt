@@ -52,7 +52,7 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
         )
     }
     fun getShares(request: SharesGetRequest): List<ShareInfoGetRequest> {
-        val shares = shareRepository.findSharesByLatAnAndLngAndKm(request.lat, request.lng, request.km)
+        val shares = shareRepository.findSharesByLatAnAndLngAndKm(request.lat, request.lng, request.km, Category.fromInt(request.category) ?: throw CustomError(ErrorState.WRONG_CATEGORY))
         return shares.map { ShareInfoGetRequest(
             uuid = it.uuid,
             sharer = UserResponse(
@@ -71,4 +71,13 @@ class ShareService(val shareRepository: ShareRepository, val userRepository: Use
             lng = it.lng
         )
     }}
+
+    fun deleteShare(uuid: String, username: String?) {
+        val share = shareRepository.findShareByUuid(UUID.fromString(uuid)) ?: throw CustomError(ErrorState.NOT_FOUND_SHARE)
+        if (username != null) {
+            val user = userRepository.findUserByName(username) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
+            userRepository.save(user.copy(socialCredit = user.socialCredit + 10))
+        }
+        shareRepository.delete(share)
+    }
 }
