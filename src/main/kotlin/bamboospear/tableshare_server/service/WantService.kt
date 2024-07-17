@@ -28,6 +28,7 @@ class WantService(val wantRepository: WantRepository, val shareRepository: Share
         val share = shareRepository.findShareByUuid(UUID.fromString(uuid)) ?: throw CustomError(ErrorState.NOT_FOUND_SHARE)
         val user = userRepository.findUserByUuid(UUID.fromString(principal.name)) ?: throw CustomError(ErrorState.NOT_FOUND_USER)
         wantRepository.findWantByShareAndWisher(share, user)?.let { throw CustomError(ErrorState.WANT_IS_ALREADY_EXISTED) }
+        userRepository.save(share.sharer.copy(socialCredit = share.sharer.socialCredit + 5))
         wantRepository.save(Want(
             share = share,
             wisher = user

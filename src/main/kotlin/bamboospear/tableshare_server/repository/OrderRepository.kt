@@ -1,10 +1,10 @@
 package bamboospear.tableshare_server.repository
 
-import bamboospear.tableshare_server.entity.Image
+import bamboospear.tableshare_server.entity.Order
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface ImageRepository: JpaRepository<Image, UUID> {
+interface OrderRepository: JpaRepository<Order, UUID> {
 }

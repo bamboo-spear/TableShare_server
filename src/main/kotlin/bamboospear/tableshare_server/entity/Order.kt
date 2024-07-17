@@ -4,12 +4,12 @@ import jakarta.persistence.*
 import java.util.UUID
 
 @Entity
-data class Want(
+data class Order(
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     val uuid: UUID = UUID.randomUUID(),
     @ManyToOne(fetch = FetchType.LAZY)
-    val wisher: User,
+    val orderer: User,
     @ManyToOne(fetch = FetchType.LAZY)
-    val share: Share
+    val product: Product
 )

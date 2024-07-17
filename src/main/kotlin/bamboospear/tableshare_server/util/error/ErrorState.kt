@@ -19,8 +19,10 @@ enum class ErrorState(val status: HttpStatus = HttpStatus.OK, val message: Strin
     NOT_FOUND_USER(HttpStatus.FORBIDDEN, "User not found"),
     NOT_FOUND_SHARE(HttpStatus.NOT_FOUND, "Share not found"),
     NOT_FOUND_WANT(HttpStatus.NOT_FOUND, "Want not found"),
+    NOT_FOUND_PRODUCT(HttpStatus.NOT_FOUND, "Product not found"),
 
     YOUR_NOT_OWNER(HttpStatus.FORBIDDEN, "Your not owner"),
+    YOU_ARE_POOL(HttpStatus.BAD_REQUEST, "You do not have enough social credit to buy a product"),
 
     WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "Wrong password"),
     WRONG_ADRESS(HttpStatus.BAD_REQUEST, "Wrong adress"),

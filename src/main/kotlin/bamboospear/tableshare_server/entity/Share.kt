@@ -8,7 +8,7 @@ data class Share(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val uuid: UUID = UUID.randomUUID(),
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     val sharer: User,
     val category: Category,
     @OneToMany(fetch = FetchType.LAZY)
